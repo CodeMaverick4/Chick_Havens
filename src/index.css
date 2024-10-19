@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +14,24 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+@layer base {
+  :root {
+    --text: #190608;
+    --background: #fcf3f4;
+    --borderC: #000000;
+    --primary: #cf4a53;
+    --secondary: #96e4b5;
+    --accent: #61bdd6;
+  }
+  .dark {
+    --text: #f9e6e8;
+    --background: #0c0304;
+    --borderC: #ffffff;
+    --primary: #b53039;
+    --secondary: #1b693a;
+    --accent: #29859e;
+  }
 }
