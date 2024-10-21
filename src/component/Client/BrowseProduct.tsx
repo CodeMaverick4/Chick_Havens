@@ -4,8 +4,7 @@ import ProductCard from './ProductCard';
 import FilterSideBar from './FilterSideBar';
 import products from './Constants';
 
-const BrowseProduct:React.FC = ()=> {
-    const [grid,setGrid] = useState<number>(4);
+const BrowseProduct:React.FC = ()=> {    
     const [showFilter,setFilter] = useState<boolean>(false);
     const [showSortBY,setSortBY] = useState<boolean>(false);
     const [sortCriteria, setSortCriteria] = useState<string | null>(null);
@@ -48,46 +47,11 @@ const BrowseProduct:React.FC = ()=> {
         {/* nav 2 Filter  */}
         
         <FilterSideBar showFilter={showFilter} setFilter={setFilter} options={[{'Gender':['Male','Female']}, {'asdas':['Male','Female']}]}/>
-
-        {/* nav 3 */}
-        <div className='hidden lg:flex pb-5 px-5 justify-end '>
-            <div className='border border-black inline-flex'>
-                {/* <div className={`${grid===1 ? "bg-black text-white": ""} flex items-center justify-center border border-gray-500 p-3 cursor-pointer`} onClick={()=>setGrid(1)}>
-                    <span className={` ${grid===1 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                </div>
-
-                <div className={`${grid===2 ? "bg-black text-white": ""} grid items-center justify-center border border-gray-500 px-3 py-2 gap-1 cursor-pointer`} onClick={()=>setGrid(2)}>
-                    <span className={` ${grid===2 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                    <span className={` ${grid===2 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                </div> */}
-
-                <div className={`${grid===3 ? "bg-black text-white": ""} grid grid-cols-3 items-center justify-center border border-gray-500 px-3 py-2 gap-1 cursor-pointer`} onClick={()=>setGrid(3)}>
-                    <span className={` ${grid===3 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                    <span className={` ${grid===3 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                    <span className={` ${grid===3 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                    <span className={` ${grid===3 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                    <span className={` ${grid===3 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                    <span className={` ${grid===3 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                </div>
-
-                <div className={`${grid===4 ? "bg-black text-white": ""} grid grid-cols-4 items-center justify-center border border-gray-500 px-3 py-2 gap-1 cursor-pointer`} onClick={()=>setGrid(4)}>
-                    <span className={` ${grid===4 ? 'border-white' : 'border-black'} p-1 border  `} ></span>
-                    <span className={` ${grid===4 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                    <span className={` ${grid===4 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                    <span className={` ${grid===4 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                    <span className={` ${grid===4 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                    <span className={` ${grid===4 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                    <span className={` ${grid===4 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                    <span className={` ${grid===4 ? 'border-white' : 'border-black'} p-1 border `} ></span>
-                </div>
-            </div>
-        </div>
-
-    
+  
         
 
-        {/* nav 4 / products cards */}
-        <div className={`px-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-${grid} gap-x-10 gap-y-4 place-items-center` } >
+        {/* nav 3 / products cards */}
+        <div className={`px-5 md:px-10 grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-10 gap-y-4 place-items-center`}>
         
         {products.map(product =>(            
             <ProductCard product={product}/>

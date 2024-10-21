@@ -36,24 +36,24 @@ const ProductCard:React.FC<productCardProps>=({product})=> {
   };
 
   return (    
-    <div className='relative grid gap-1 w-[156px] lg:w-[312px] border-2 border-dashed border-gray-400 p-3  text-[1vw]'>        
+    <div className='relative grid gap-1 w-full lg:w-[312px] border-2 border-dashed border-gray-400 p-3  text-[1vw]'>        
 
-        <div className='lg:h-[420px] relative' onMouseEnter={() => setArrow(true)} onMouseLeave={() => setArrow(false)}>
-             <ChevronLeft strokeWidth={3} size={45} color='black' onClick={handlePrev} className={`${arrow ? 'opacity-100' : 'opacity-0'} p-2 transition-opacity duration-300 absolute bottom-1/2 left-0 -translate-y-1/2 z-50`}/>
-            <ChevronRight strokeWidth={3} size={45} color='black'  onClick={handleNext} className={`${arrow ? 'opacity-100' : 'opacity-0'} p-2 transition-opacity duration-300 absolute bottom-1/2 right-0 -translate-y-1/2 z-50`}/>
+        <div className=' h-[420px] relative' onMouseEnter={() => setArrow(true)} onMouseLeave={() => setArrow(false)} >
+             <ChevronLeft strokeWidth={3} size={45} color='black' onClick={handlePrev} className={`${arrow ? 'xl:opacity-100' : 'xl:opacity-0'} p-2 transition-opacity duration-300 absolute bottom-1/2 left-0 -translate-y-1/2 z-50`}/>
+            <ChevronRight strokeWidth={3} size={45} color='black'  onClick={handleNext} className={`${arrow ? 'xl:opacity-100' : 'xl:opacity-0'} p-2 transition-opacity duration-300 absolute bottom-1/2 right-0 -translate-y-1/2 z-50`}/>
             {product.images.map((image, index) => (
               <img 
                 key={index}
                 src={image} 
                 alt={`Slide ${index}`} 
-                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${activeIndex === index ? 'opacity-100' : 'opacity-0'}`} 
+                className={` absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${activeIndex === index ? 'opacity-100' : 'opacity-0'}`}                 
               />
             ))}
-           <Link to={`/shop/detail`} state={{product}} ><div className={`p-3 ${arrow ? 'opacity-100' : 'opacity-0'} flex items-center justify-center w-[80%] absolute bottom-3 left-1/2  -translate-x-1/2 bg-white text-white p-3 bg-white  transition-all duration-300`}><button className={` w-full bg-black py-2 z-50`}>QUICK VIEW</button></div></Link>
+           <Link to={`/shop/detail`} state={{product}} ><div className={`p-3 ${arrow ? 'opacity-100' : 'opacity-0'} hidden lg:flex items-center justify-center w-[80%] absolute bottom-3 left-1/2  -translate-x-1/2 bg-white text-white p-3 bg-white  transition-all duration-300`}><button className={` w-full bg-black py-2 z-50`}>QUICK VIEW</button></div></Link>
         </div>
-      <div className="flex flex-wrap font-semibold text-purple-600">Chick Havens</div>
-      <div className="flex flex-wrap">{product.productName}</div>
-      <div className="flex flex-wrap justify-between">
+      <div className="flex flex-wrap font-semibold text-purple-600 text-xl">Chick Havens</div>
+      <div className="flex flex-wrap text-xl font-semibold">{product.productName}</div>
+      <div className="flex flex-wrap justify-between text-xl">
         <span>Rs. {product.price}</span>
         <span><span className={`rounded-full p-2 bg-${product.color}-600 inline-block`}></span></span>
       </div>
