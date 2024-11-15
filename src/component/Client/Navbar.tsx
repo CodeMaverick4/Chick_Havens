@@ -20,7 +20,7 @@ const Navbar:React.FC = ()=> {
         </button>
 
         {location.pathname.startsWith('/account') ? 
-          <Link to={'shop'} className='flex items-center gap-2 cursor-pointer border border-black py-3 px-4'><House/> Home</Link>
+          <Link to={'/'} className='flex items-center gap-2 cursor-pointer border border-black py-3 px-4'><House/> Home</Link>
           :
           <Link to={'account'} className='flex items-center gap-2 cursor-pointer border border-black py-3 px-4'><CircleUser/> Account</Link>                  
 

@@ -25,7 +25,7 @@ const App: React.FC =()=> {
           <Route path="" element={<Client />} >          
             {/* <Route index element={<LandingPage />} />           */}
             {/* <Route index element={<BrowseProduct />} />     */}
-            <Route path="shop" element={<BrowseProduct />} />    
+            <Route index element={<BrowseProduct />} />    
             <Route path="shop/detail" element={<DetailedView />} />    
             <Route path="/account" element={<Account />} >
               <Route path='profile' element={<Profile />} />
