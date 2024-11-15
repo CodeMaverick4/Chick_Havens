@@ -1,6 +1,6 @@
 import { SlidersHorizontal } from 'lucide-react'
 import React, { useState } from 'react'
-import { DoubleRangeInput, Input, SelectInput } from '../Input'
+import { DoubleRangeInput, Input, SelectInput } from '../../custom inputs/Input'
 
 
 const ProductFilter:React.FC=()=> {

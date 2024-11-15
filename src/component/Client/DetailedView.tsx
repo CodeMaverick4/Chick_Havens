@@ -16,12 +16,7 @@ const DetailedView:React.FC=()=> {
     <div className='pb-4'><Link className='flex gap-2 items-center' to={'/shop'}><ArrowLeft size={20}/>Back</Link></div>
       <div className='flex flex-col lg:flex-row '>
         {/* first container  */}
-        <div className='grid gap-2 lg:w-1/2 '>          
-            {/* <img src="/1/1.webp" alt=""  className='w-full h-full object-cover'/>
-            <img src="/1/2.webp" alt=""  className='w-full h-full object-cover'/>
-            <img src="/1/3.webp" alt=""  className='w-full h-full object-cover'/>
-            <img src="/1/4.webp" alt=""  className='w-full h-full object-cover'/>
-            <img src="/1/5.webp" alt=""  className='w-full h-full object-cover'/>    */}
+        <div className='grid gap-2 lg:w-1/2 '>                      
             {product.images.map((image: string, index: number) => (
               <img 
                 key={index}
@@ -63,7 +58,6 @@ const DetailedView:React.FC=()=> {
               {['S', 'M', 'L', 'XL', 'XXL', '28', '30', '32', '34', '36', '38', '40', '42', '44'].map(size => (
                 <div className={` ${selectedSize === size ? 'bg-black text-white': ''} size-10 border border-black flex justify-center items-center`} onClick={()=>setSize(size)}>{size} </div>
               ))}
-              
               
               
             </div>

@@ -97,15 +97,21 @@ const SelectInput: React.FC<SelectInputProps> = ({ categories }) => {
 
 interface DoubleRangeInputProps {
   setMinPrice: React.Dispatch<React.SetStateAction<number>>;
-  setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
+  setMaxPrice: React.Dispatch<React.SetStateAction<number>>;   
   priceRange?:number ;
+  showOption?:string;
+  handleFinalPrice?: (min: number, max: number) => void; // for price filter  
 }
 
-const DoubleRangeInput: React.FC<DoubleRangeInputProps> = ({ setMinPrice, setMaxPrice, priceRange=10000}) => {
+const DoubleRangeInput: React.FC<DoubleRangeInputProps> = ({ setMinPrice, setMaxPrice, priceRange=5000, showOption, handleFinalPrice}) => {
   const [isLeftMouseDown, setLeftMouseDown] = useState<boolean>(false);
   const [isRightMouseDown, setRightMouseDown] = useState<boolean>(false);
   const [leftCirclePos, setLeftCirclePos] = useState<number>(0);
   const [rightCirclePos, setRightCirclePos] = useState<number>(0);
+
+  // for price 
+  const [localMinPrice,setLocalMinPrice] = useState<number>(0)
+  const [localMaxPrice,setLocalMaxPrice] = useState<number>(5000)    
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -133,11 +139,13 @@ const DoubleRangeInput: React.FC<DoubleRangeInputProps> = ({ setMinPrice, setMax
         if (mouseX >= 0 && mouseX <= rightCirclePos) {          
           setLeftCirclePos(mouseX-8);
           setMinPrice(Math.round((mouseX / containerWidth) * priceRange));
+          setLocalMinPrice(Math.round((mouseX / containerWidth) * priceRange));
         }
       } else if (isRightMouseDown) {        
         if (mouseX >= leftCirclePos+16 && e.clientX <= containerRight) {
           setRightCirclePos(mouseX-8);
           setMaxPrice(Math.round((mouseX / containerWidth) * priceRange));
+          setLocalMinPrice(Math.round((mouseX / containerWidth) * priceRange));
         }
       }
     }
@@ -146,14 +154,17 @@ const DoubleRangeInput: React.FC<DoubleRangeInputProps> = ({ setMinPrice, setMax
   const handleMouseUp = () => {
     setLeftMouseDown(false);
     setRightMouseDown(false);
+    if(handleFinalPrice) handleFinalPrice(localMinPrice,localMinPrice) // for price change update to parent
+    
   };
 
   useEffect(() => {
     if (containerRef.current) {
       const containerRect = containerRef.current.getBoundingClientRect();      
-      setRightCirclePos(containerRect.width-8);
+      setRightCirclePos(containerRect.width-8);     
+      // console.log(containerRect.width)
     }
-  },[])
+  },[showOption])
 
   useEffect(() => {
     if (isLeftMouseDown || isRightMouseDown) {
@@ -168,9 +179,9 @@ const DoubleRangeInput: React.FC<DoubleRangeInputProps> = ({ setMinPrice, setMax
   }, [isLeftMouseDown, isRightMouseDown]);
 
   return (
-    <div className=' py-2  relative'>
+    <div className=' py-2  relative' ref={containerRef}>
       
-      <div className=" z-10 w-full relative h-1 rounded-lg" ref={containerRef}  style={{ backgroundColor: 'var(--borderC)' }}>
+      <div className=" z-10 w-full relative h-1 rounded-lg"   style={{ backgroundColor: 'var(--borderC)' }}>
         {/* Left Circle */}
         <div
           onMouseDown={(e) => handleMouseDown(e, 0)}

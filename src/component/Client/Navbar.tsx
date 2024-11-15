@@ -1,4 +1,4 @@
-import { CircleUser, House, ShoppingCart, User } from 'lucide-react'
+import { CircleUser, House, Shield, ShoppingCart, User } from 'lucide-react'
 import React from 'react' 
 import { Link, useLocation } from 'react-router-dom'
 
@@ -25,6 +25,7 @@ const Navbar:React.FC = ()=> {
           <Link to={'account'} className='flex items-center gap-2 cursor-pointer border border-black py-3 px-4'><CircleUser/> Account</Link>                  
 
         }
+        <Link to={'admin/overview'} className='flex items-center gap-2 cursor-pointer border border-black bg-gradient-to-r from-green-200 to-green-500 py-3 px-4'><Shield/> Admin Dashboard</Link>
         
       </div>
 

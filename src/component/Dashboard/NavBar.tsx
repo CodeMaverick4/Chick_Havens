@@ -78,7 +78,7 @@ const NavBar: React.FC = ()=> {
       </div>
     <div className=' flex items-center gap-4 right-11 cursor-pointer'>
         <div className='hidden sm:block'>
-          <PrimButton icon={<Eye size={20} className='text-accent'/>} text="Open Website" />
+          <Link to={'/shop'}><PrimButton icon={<Eye size={20} className='text-accent'/>} text="Open Website" /></Link>
         </div>
         <div className='sm:hidden'>
           <Iconwithspan icon={<Globe color="purple" />} text='website' abovePosition={false}/>

@@ -1,38 +1,53 @@
 import { ChevronRight, X } from 'lucide-react'
-import React, { Dispatch, useState } from 'react'
-import { DoubleRangeInput } from '../Dashboard/Input';
+import React, { Dispatch, useEffect, useState } from 'react'
+import { DoubleRangeInput } from '../../custom inputs/Input';
 
 type MyJsonType = { [key: string]: string[] };
 
-interface filterProps{
-    options:MyJsonType[];
+interface filterProps{    
     setFilter:React.Dispatch<React.SetStateAction<boolean>>;
+    setDiscounts:React.Dispatch<React.SetStateAction<number[]>>;
+    setSizeFilter:React.Dispatch<React.SetStateAction<string[]>>;
+    selectedSizeFilters:string[]
     showFilter:boolean;
+    onRangeChange: (min: number, max: number) => void; // for price filter
 }
-const FilterSideBar:React.FC<filterProps>=({showFilter,setFilter,options})=> {
+const FilterSideBar:React.FC<filterProps>=({showFilter,setFilter,setDiscounts,selectedSizeFilters,setSizeFilter,onRangeChange})=> {
     const [showOption,setOption] = useState<string>('')
     const [minPrice,setMinPrice] = useState<number>(0)
     const [maxPrice,setMaxPrice] = useState<number>(5000)    
-    const [selectedSizeFilters, setSizeFilter] = useState<string[]>([]);
 
+    const [finalPrice, setfinalPrice] = useState<{min:number,max:number}>({ min: 0, max: 5000}); //for price filter
+
+    const handleFinalPrice = (min:number,max:number)=>{
+        setfinalPrice({min,max})
+    }
+
+    useEffect(()=>{
+        onRangeChange(minPrice,maxPrice)
+    },[finalPrice])
 
     const handleSizeFilter = (size:string)=>{
-        // if(selectedSizeFilters.includes(size)){
-        //     const updatedsSize = selectedSizeFilters.filter((prev)=> prev !==size)
-        //     setSizeFilter(updatedsSize);
-        // }else{
-        //     setSizeFilter([...selectedSizeFilters,size])
-        // }        
-
         setSizeFilter((prevSizes)=>{
             if(prevSizes.includes(size)){
                 return prevSizes.filter(prev=> prev!==size)
             }else{
                 return [...prevSizes,size]
             }
-
         })
     }
+
+    const handleDiscountToggle = (discount:number) => {
+        setDiscounts(prevSelected => {
+          // If the discount is already selected, remove it, otherwise add it
+          if (prevSelected.includes(discount)) {
+            return prevSelected.filter(d => d !== discount);
+          } else {
+            return [...prevSelected, discount];
+          }
+        });        
+      };    
+
 
   return (
     <>
@@ -51,17 +66,14 @@ const FilterSideBar:React.FC<filterProps>=({showFilter,setFilter,options})=> {
                         <ChevronRight className={` ${showOption === 'price' ? 'rotate-90' : ''} transition-all duration-300`}/>
                     </div>
                     
-                    <div className={`${showOption === 'price' ? 'translate-y-0 opacity-100 max-h-40' : '-translate-y-10 opacity-0 max-h-0'} overflow-hidden ease-in-out grid transition-all duration-300`}>                       
-                        
+                    <div className={`${showOption === 'price' ? 'translate-y-0 opacity-100 max-h-40' : '-translate-y-10 opacity-0 max-h-0'} w-full overflow-hidden ease-in-out grid transition-all duration-300`}>                                               
                         <div className='flex items-center justify-between px-4 '> 
                             <span>Min Price: {minPrice}</span>
                             <span>Max Price:  {maxPrice}</span>
                         </div>
                         <div  className=' px-4 py-5'>
-                            <DoubleRangeInput setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} priceRange={5000}/>
-                        </div>
-                        
-                        
+                            <DoubleRangeInput handleFinalPrice={handleFinalPrice} showOption={showOption} setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} priceRange={5000} />
+                        </div>                        
                     </div>
                 </div>
                 <div className='h-[1px] bg-gray-500 '></div>
@@ -76,11 +88,11 @@ const FilterSideBar:React.FC<filterProps>=({showFilter,setFilter,options})=> {
                     
                     <div className={`${showOption === 'discount' ? 'translate-y-0 opacity-100 max-h-full' : '-translate-y-10 opacity-0 max-h-0'} overflow-hidden ease-in-out grid transition-all duration-300`}>                       
                         <div className='px-8 pb-5'>
-                            <div className="flex items-center gap-3"><input type="checkbox" name="" id="" className='size-4'/> 10% or below</div>
-                            <div className="flex items-center gap-3"><input type="checkbox" name="" id="" className='size-4'/> 10% or below</div>
-                            <div className="flex items-center gap-3"><input type="checkbox" name="" id="" className='size-4'/> 10% or below</div>
-                            <div className="flex items-center gap-3"><input type="checkbox" name="" id="" className='size-4'/> 10% or below</div>
-                            <div className="flex items-center gap-3"><input type="checkbox" name="" id="" className='size-4'/> 10% or below</div>
+                            <div className="flex items-center gap-3"><input onChange={()=>handleDiscountToggle(10)} type="checkbox" name="" id="" className='size-4'/> 10% or above</div>
+                            <div className="flex items-center gap-3"><input onChange={()=>handleDiscountToggle(20)} type="checkbox" name="" id="" className='size-4'/> 20% or above</div>
+                            <div className="flex items-center gap-3"><input onChange={()=>handleDiscountToggle(30)} type="checkbox" name="" id="" className='size-4'/> 30% or above</div>
+                            <div className="flex items-center gap-3"><input onChange={()=>handleDiscountToggle(40)} type="checkbox" name="" id="" className='size-4'/> 40% or above</div>
+                            <div className="flex items-center gap-3"><input onChange={()=>handleDiscountToggle(50)} type="checkbox" name="" id="" className='size-4'/> 50% or above</div>
                         </div>
                         
                     </div>
@@ -107,7 +119,7 @@ const FilterSideBar:React.FC<filterProps>=({showFilter,setFilter,options})=> {
                 <div className='h-[1px] bg-gray-500 '></div>
 
                 {/* Availability Filter  */}
-                <div>                        
+                {/* <div>                        
                     <div className='flex items-center justify-between py-3 pr-3 pl-5  cursor-pointer' onClick={() => showOption === 'availability' ? setOption('') : setOption('availability')} >
                         <span>Availability</span> 
                         <ChevronRight className={` ${showOption === 'availability' ? 'rotate-90' : ''} transition-all duration-300`}/>
@@ -115,17 +127,14 @@ const FilterSideBar:React.FC<filterProps>=({showFilter,setFilter,options})=> {
                     
                     <div className={`${showOption === 'availability' ? 'translate-y-0 opacity-100 max-h-full' : '-translate-y-10 opacity-0 max-h-0'} overflow-hidden ease-in-out grid transition-all duration-300`}>                       
                         <div className='px-8 pb-5 flex flex-col gap-2'>
-                            <div className="flex items-center gap-3"><input type="checkbox" name="" id="" className='size-4'/> In Stock</div>
-                            <div className="flex items-center gap-3"><input type="checkbox" name="" id="" className='size-4' /> Out Of Stock (455) </div>
+                            <div className="flex items-center gap-3"><input  type="checkbox" name="" id="" className='size-4'/> In Stock</div>
+                            <div className="flex items-center gap-3"><input  type="checkbox" name="" id="" className='size-4' /> Out Of Stock (455) </div>
                     
                         </div>
                         
                     </div>
-                </div>
+                </div> */}
                 <div className='h-[1px] bg-gray-500 '></div>
-
-
-
 
             </div>
         </div>
